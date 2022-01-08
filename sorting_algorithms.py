@@ -1,5 +1,8 @@
 # coding=utf-8
 
+import random
+
+
 def bubble_sort(arr, ascending=True):
 	"""Bubble Sorting"""
 
@@ -72,17 +75,16 @@ def selection_sort(arr, ascending=True):
 	"""Selection Sorting"""
 
 	n = len(arr)
-	k = 1
 	for i in range(0, n):
-		min = i
+		key = i
 		for j in range(i + 1, n):
 			if ascending:
 				flag = arr[i] > arr[j]
 			else:
 				flag = arr[i] < arr[j]
 			if flag:
-				min = j
-		arr[i], arr[min] = arr[min], arr[i]
+				key = j
+		arr[i], arr[key] = arr[key], arr[i]
 
 	return arr
 
@@ -132,6 +134,29 @@ def radix_sort_lsd(arr, ascending=True):
 	return arr
 
 
+def quick_sort(arr, ascending=True):
+	"""Quick Sorting"""
+
+	n = len(arr)
+	if n <= 1:
+		return arr
+
+	p = random.randint(0, n - 1)
+	pivot = arr[p]
+	
+	left = [x for x in arr if x < pivot]
+	mid = [x for x in arr if x == pivot]
+	right = [x for x in arr if x > pivot]
+
+	left = quick_sort(left, ascending=ascending)
+	right = quick_sort(right, ascending=ascending)
+
+	if ascending:
+		return left + mid + right
+	else:
+		return right + mid + left
+
+	
 
 if __name__ == '__main__':
 
@@ -155,3 +180,6 @@ if __name__ == '__main__':
 
 	print("radix_sort_lsd ascending: \n", radix_sort_lsd(arr, ascending=True))
 	print("radix_sort_lsd decending: \n", radix_sort_lsd(arr, ascending=False))
+
+	print("quick_sort ascending: \n", quick_sort(arr, ascending=True))
+	print("quick_sort decending: \n", quick_sort(arr, ascending=False))
